@@ -1,0 +1,106 @@
+{% extends 'core/base.html' %} {% block title %} Carrito {% endblock %} 
+{% block content %} {% load static %}
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Carrito</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table tablaProducto">
+                    <thead>
+                        <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Subtotal</th>
+                            <th scope="col">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% csrf_token %} {% for item in items %}
+                        <tr>
+                            <!-- Nombre del producto -->
+                            <th scope="row">{{ item.producto.nombreProducto }}</th>
+                            <!-- Precio del producto -->
+                            <td>${{ item.producto.precio }}</td>
+                            <!-- Cantidad del producto -->
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <p class="cantidad m-0">{{item.cantidad }}</p>
+                                    <div class="cantidad">
+                                        <i class="fa-solid fa-sort-up update-cart" data-product="{{ item.producto.idProducto }}" data-action="add"></i>
+                                        <i class="fa-solid fa-sort-down update-cart" data-product="{{ item.producto.idProducto }}" data-action="remove"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- Subtotal del producto -->
+                            <td>${{ item.get_total }}</td>
+                            <td>
+                                <button class="btn-borrar">
+                                    <i class="fa-solid fa-trash-can update-cart" data-product="{{ item.producto.idProducto }}" data-action="delete"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <!-- Total del carro -->
+                        <tr>
+                            <td>Total:</td>
+                            <td>${{detallePedido.get_total_cart}}</td>
+                        </tr>
+                        
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="botones">
+                    <a href="{% url 'vista_productos_publicos' %}"> 
+                        <button class=" btn btn-continuar-comprando">
+                            <i class="fa-solid fa-arrow-left-long"></i> Continuar Comprando
+                        </button></a>
+                    <a href="#">
+                        <button
+                            type="button"
+                            class="btn btn-comprar"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Comprar
+                        </button>
+                    </a>
+                </div>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    Compra exitosa
+                                </h5>
+                                <a href="{% url 'index' %}">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="modal-body">Su compra se ha realizado con éxito</div>
+                            <div class="modal-footer">
+                                <a href="{% url 'index' %}">
+                                    <button type="button" class="btn btn-success">Volver al Inicio</button>
+                                </a>
+                                <a href="{% url 'vista_productos_publicos' %}">
+                                    <button type="button" class="btn btn-success">Volver a Productos</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

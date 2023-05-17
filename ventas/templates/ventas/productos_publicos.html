@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %} {% block title %} Productos {% endblock %}
+{% if request.user.is_authenticated %}
+{% block content %} 
+{% load static %}
+
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Productos</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="carrito">
+                    <button class="btn btn-carrito"><a href="{% url 'carrito' %}" class="text-decoration-none color-principal"> <i class="fa-solid fa-cart-shopping"></i> ¡Ver Carrito!</a></button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row contenedorProductos">
+                    {% csrf_token %} {% for i in productos %}
+                        <div class="col-md-3">
+                            <div class="card">
+                                {% if user.is_superuser %}
+                                <a href="{% url 'admin:index' %}">
+                                    <button class="botonEditar">
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </button>
+                                </a>
+                                {% endif %}
+                                <div class="imgProductos">
+                                    <img class="card-img-top" src="{{ i.imagen.url }}" alt="Imagen" />
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ i.nombreProducto }} </h5>
+                                    <p class="card-text">{{ i.descripcion }}</p>
+                                    <div class="d-flex flex-column">
+                                        <div class="linea"></div>
+                                        <p1>Precio: ${{ i.precio }}</p1>
+                                        <p1>Stock: {{ i.stock }}</p1>
+                                        <form style="display: none"></form> <br>
+                                        <button data-product="{{ i.idProducto }}" data-action="add" type="submit" class="button2 actualizar-carrito"> Agregar </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+{% else %}
+
+<h1>No tienes acceso a esta página</h1>
+
+{% endif%}

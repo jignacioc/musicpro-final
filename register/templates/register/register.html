@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+
+{% block title %} ¡Registrate! {% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %} 
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6">
+                <div class="formulario" id="formreg">
+                    <form action="" method="POST" class="form-group boxshadow">
+                        {% csrf_token %}
+                        <div id="div_id_username" class="control-group">
+                            <label for="id_username" class="control-label requiredField">Nombre de Usuario: </label> 
+                            <div class="controls">
+                                <input type="text" name="username" maxlength="150" autofocus class="textinput textInput input" required id="id_username">
+                            </div> 
+                        </div> 
+                        <div id="div_id_email" class="control-group">
+                            <label for="id_email" class="control-label requiredField">Email: </label> 
+                            <div class="controls"> 
+                                <input type="email" name="email" class="emailinput input" required id="id_email"> 
+                            </div> 
+                        </div> 
+                        <div id="div_id_password1" class="control-group"> <label for="id_password1" class="control-label requiredField">Contraseña: </label> 
+                            <div class="controls"> 
+                                <input type="password" name="password1" autocomplete="new-password" class="textinput textInput input" required id="id_password1"> 
+                            </div> 
+                        </div> 
+                        <div id="div_id_password2" class="control-group">
+                            <label for="id_password2" class="control-label requiredField">Confirmar Contraseña: </label> 
+                            <div class="controls"> 
+                                <input type="password" name="password2" autocomplete="new-password" class="textinput textInput input" required id="id_password2"> 
+                            </div> 
+                        </div> 
+                        <p id="hint_id_password1" class="help-block">
+                            <p>(!) Su contraseña debe contener al menos 8 caracteres.</p>
+                        </p> <br>
+            
+                        <button class="btn btn-success" type="submit" id="btn">¡Registrarse!</button>
+
+                        {% if form.non_field_errors %}
+                                <div class="alert alert-primary mt-3 alert-danger" role="alert">
+                                Error, vuelva a intentarlo.
+                                </div>
+                            {% endif %}
+                        {% if 'register' in request.GET %}
+                            <div class="alert alert-primary mt-3 alert-danger" role="alert">
+                            Usuario registrado correctamente!
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %} 

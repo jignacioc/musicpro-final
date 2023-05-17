@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% block title %} ¡Inicia Sesión! {% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="formulario2">
+                        <form action="" method="POST" class="form-group boxshadow">
+                            {% csrf_token %}
+                            <div id="div_id_username" class="control-group"> 
+                                <label for="id_username" class="control-label requiredField">Nombre de Usuario:</label> 
+                                <div class="controls"> 
+                                    <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" class="textinput textInput input" required id="id_username"> 
+                                </div> 
+                            </div> 
+                            <div id="div_id_password" class="control-group"> 
+                                <label for="id_password" class="control-label requiredField">Contraseña:</label> 
+                                <div class="controls"> 
+                                    <input type="password" name="password" autocomplete="current-password" class="textinput textInput input" required id="id_password"> 
+                                </div> 
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-success">Iniciar Sesión</button>
+
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-primary mt-3 alert-danger" role="alert">
+                                Usuario o contraseña incorrectos, vuelva a intentarlo.
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="formulario">
+                        <p>¿No tienes una cuenta?, clickea <a href="{%url 'register'%}" style="text-decoration: none;">aquí</a> y registrate gratis!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
